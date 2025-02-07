@@ -1,19 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameDirector : MonoBehaviour
 {
     public static GameDirector Instance;
-    public List<Enemy> Enemies;
+
+    public LevelManager levelManager;
+    public EnemyManager enemyManager;
     
     void Start()
     {
-        Instance = this;    
+        Instance = this;
+        levelManager.RestartLevel();
     }
 
     public void LevelCompleted()
     {
-        foreach (var enemy in Enemies) enemy.SetMoveSpeed(0);
+       enemyManager.StopEnemies();
     }
 }

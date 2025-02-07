@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -43,6 +40,7 @@ public class Player : MonoBehaviour
     {
         other.gameObject.SetActive(false);
         IsCollected = true;
+        GameDirector.Instance.levelManager.SetActiveDoor(true);
     }
 
     private void Escaped(Collider other)
