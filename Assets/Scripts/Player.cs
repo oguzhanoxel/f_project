@@ -1,16 +1,23 @@
+using System;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
     public static Player Instance { get; private set; }
     public bool IsCollected { get; private set; } = false;
+
+    private Vector3 _spawnPos = new Vector3(0, 0.6f, -8.0f);
     
     private float _moveSpeed = 2f;
     private Rigidbody _rigidbody;
-    
-    void Start()
+
+    private void Awake()
     {
         Instance = this;
+    }
+
+    void Start()
+    {
         _rigidbody = GetComponent<Rigidbody>();
     }
 
@@ -31,9 +38,13 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag(Tags.Enemy)) gameObject.SetActive(false);
         if (other.CompareTag(Tags.Door) && IsCollected) Escaped(other);
         if (other.CompareTag(Tags.Collectible)) Collect(other);
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag(Tags.Enemy) && IsCollected) gameObject.SetActive(false);
     }
 
     private void Collect(Collider other)
@@ -41,6 +52,13 @@ public class Player : MonoBehaviour
         other.gameObject.SetActive(false);
         IsCollected = true;
         GameDirector.Instance.levelManager.SetActiveDoor(true);
+    }
+
+    public void ResetPlayer()
+    {
+        gameObject.transform.position = _spawnPos;
+        gameObject.SetActive(true);
+        IsCollected = false;
     }
 
     private void Escaped(Collider other)

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    [SerializeField] public List<Enemy> enemies;
+    public List<Enemy> enemies;
     [SerializeField] public Enemy enemyPrefab;
     [SerializeField] public int enemyCount = 3;
 
@@ -32,6 +32,10 @@ public class EnemyManager : MonoBehaviour
 
     private void DeleteEnemies()
     {
-        
+        foreach (var enemy in enemies)
+        {
+            Destroy(enemy.gameObject);
+        }
+        enemies.Clear();
     }
 }

@@ -5,11 +5,23 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
     public GameObject door;
+    [SerializeField] GameObject collectiblePrefab;
+    
+    private GameObject _collectible;
 
     public void RestartLevel()
     {
         SetActiveDoor(false);
         RandomDoorPosition();
+        GenerateCollectible();
+    }
+
+    public void GenerateCollectible()
+    {
+        if (_collectible is not null) Destroy(_collectible.gameObject);
+        _collectible = Instantiate(collectiblePrefab);
+        var posX = Random.Range(-4.0f, 4.0f);
+        _collectible.transform.position = new Vector3(posX, 0.6f, 8.0f);
     }
 
     public void SetActiveDoor(bool value)

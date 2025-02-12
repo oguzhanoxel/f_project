@@ -1,26 +1,28 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
+    private NavMeshAgent _agent;
     private Rigidbody _rigidbody;
     private float _moveSpeed = 1.0f;
     
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        _agent = GetComponent<NavMeshAgent>();
     }
 
     void Update()
     {
         if (Player.Instance.IsCollected)
         {
-            var direction = (Player.Instance.transform.position - transform.position).normalized;
-            _rigidbody.velocity = direction.normalized * _moveSpeed;
+            _agent.destination = Player.Instance.transform.position;
         }
     }
 
     public void SetMoveSpeed(float moveSpeed)
     {
-        _moveSpeed = moveSpeed;
+        _agent.speed = 0;
     }
 }
