@@ -34,4 +34,9 @@ public class GameDirector : MonoBehaviour
     {
        enemyManager.StopEnemies();
     }
+
+    public void LevelFailed()
+    {
+        enemyManager.StopEnemies();
+    }
 }

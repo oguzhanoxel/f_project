@@ -4,13 +4,14 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour
 {
     private NavMeshAgent _agent;
-    private Rigidbody _rigidbody;
-    private float _moveSpeed = 1.0f;
+    private Animator _animator;
+    
+    private bool _isWalking = false;
     
     void Start()
     {
-        _rigidbody = GetComponent<Rigidbody>();
         _agent = GetComponent<NavMeshAgent>();
+        _animator = GetComponentInChildren<Animator>();
     }
 
     void Update()
@@ -18,11 +19,17 @@ public class Enemy : MonoBehaviour
         if (Player.Instance.IsCollected)
         {
             _agent.destination = Player.Instance.transform.position;
+            if (!_isWalking)
+            {
+                _isWalking = true;
+                _animator.SetTrigger(Animations.Walk);
+            }
         }
     }
-
-    public void SetMoveSpeed(float moveSpeed)
+    
+    public void Stop()
     {
         _agent.speed = 0;
+        _animator.SetTrigger(Animations.Idle);
     }
 }

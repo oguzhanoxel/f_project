@@ -44,7 +44,7 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag(Tags.Enemy) && IsCollected) gameObject.SetActive(false);
+        if (other.gameObject.CompareTag(Tags.Enemy) && IsCollected) Dead(); 
     }
 
     private void Collect(Collider other)
@@ -65,5 +65,11 @@ public class Player : MonoBehaviour
     {
         gameObject.SetActive(false);
         GameDirector.Instance.LevelCompleted();
+    }
+
+    private void Dead()
+    {
+        gameObject.SetActive(false);
+        GameDirector.Instance.LevelFailed();
     }
 }

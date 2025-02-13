@@ -15,7 +15,7 @@ public class EnemyManager : MonoBehaviour
     
     public void StopEnemies()
     {
-        foreach (var enemy in enemies) enemy.SetMoveSpeed(0);
+        foreach (var enemy in enemies) enemy.Stop();
     }
 
     private void GenerateEnemies()
