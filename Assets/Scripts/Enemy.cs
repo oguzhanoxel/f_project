@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour
     {
         _agent = GetComponent<NavMeshAgent>();
         _animator = GetComponentInChildren<Animator>();
+        transform.Rotate(0f, Random.Range(0f, 360f), 0);
     }
 
     void Update()
