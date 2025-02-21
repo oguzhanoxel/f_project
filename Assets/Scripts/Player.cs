@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     private float _moveSpeed = 1f;
     private Rigidbody _rigidbody;
     private bool _isWalking = false;
+    private bool _isRunning = false;
 
     private void Awake()
     {
@@ -55,11 +56,7 @@ public class Player : MonoBehaviour
         else if (2.8f >= _rigidbody.velocity.magnitude && _rigidbody.velocity.magnitude >= 0.1f) TriggerWalkAnimation();
         else TriggerRunAnimation();
         
-        if (direction != Vector3.zero)
-        {
-            transform.rotation = Quaternion.LookRotation(direction);
-        }
-        
+        if (direction != Vector3.zero) transform.rotation = Quaternion.LookRotation(direction);
         
         _rigidbody.velocity = direction.normalized * _moveSpeed;
     }
@@ -96,24 +93,27 @@ public class Player : MonoBehaviour
         {
             _animator.SetTrigger(Animations.Walk);
             _isWalking = true;
+            _isRunning = false;
         }
     }
 
     private void TriggerIdleAnimation()
     {
-        if (_isWalking)
+        if (_isWalking || _isRunning)
         {
             _animator.SetTrigger(Animations.Idle);
             _isWalking = false;
+            _isRunning = false;
         }
     }
 
     private void TriggerRunAnimation()
     {
-        if (!_isWalking)
+        if (!_isRunning)
         {
             _animator.SetTrigger(Animations.Run);
-            _isWalking = true;
+            _isWalking = false;
+            _isRunning = true;
         }
     }
 }
