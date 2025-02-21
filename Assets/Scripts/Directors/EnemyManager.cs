@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,7 +10,13 @@ public class EnemyManager : MonoBehaviour
 
     public void RestartEnemies()
     {
+        StartCoroutine(RestartEnemiesCoroutine());
+    }
+    
+    private IEnumerator RestartEnemiesCoroutine()
+    {
         DeleteEnemies();
+        yield return new WaitForEndOfFrame();
         GenerateEnemies();
     }
     

@@ -7,6 +7,7 @@ public class GameDirector : MonoBehaviour
 
     public LevelManager levelManager;
     public EnemyManager enemyManager;
+    public MapManager mapManager;
 
     private void Awake()
     {
@@ -26,6 +27,7 @@ public class GameDirector : MonoBehaviour
     private void Restart()
     {
         levelManager.RestartLevel();
+        mapManager.GenerateWall();
         enemyManager.RestartEnemies();
         Player.Instance.ResetPlayer();
     }

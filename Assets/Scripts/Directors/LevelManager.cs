@@ -20,7 +20,7 @@ public class LevelManager : MonoBehaviour
     {
         if (_collectible is not null) Destroy(_collectible.gameObject);
         _collectible = Instantiate(collectiblePrefab);
-        var posX = Random.Range(-4.0f, 4.0f);
+        var posX = Random.Range(-13.0f, 13.0f);
         _collectible.transform.position = new Vector3(posX, 0.6f, 8.0f);
     }
 
