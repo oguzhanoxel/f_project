@@ -1798,7 +1798,6 @@ MonoBehaviour:
   enemies: []
   enemyPrefab: {fileID: 657767534551740025, guid: 1f628d5f6a333e94dae92b793d684f07,
     type: 3}
-  enemyCount: 3
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

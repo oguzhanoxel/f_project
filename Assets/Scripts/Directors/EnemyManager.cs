@@ -6,7 +6,6 @@ public class EnemyManager : MonoBehaviour
 {
     public List<Enemy> enemies;
     [SerializeField] public Enemy enemyPrefab;
-    [SerializeField] public int enemyCount = 3;
 
     public void RestartEnemies()
     {
@@ -27,11 +26,12 @@ public class EnemyManager : MonoBehaviour
 
     private void GenerateEnemies()
     {
+        var enemyCount = Random.Range(3, 10);
         for (int i = 0; i < enemyCount; i++)
         {
             var enemy = Instantiate(enemyPrefab);
-            var posX = Random.Range(i-4f, 4f);
-            var posZ = Random.Range(-4f, 4f);
+            var posX = Random.Range(-10f, 10f);
+            var posZ = Random.Range(-8f, 8f);
             enemy.transform.position = new Vector3(posX, 0.6f, posZ);
             enemies.Add(enemy);
         }

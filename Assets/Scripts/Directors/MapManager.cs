@@ -12,8 +12,10 @@ public class MapManager : MonoBehaviour
     
     private List<float> _xh = new () { -7f, 0f, 7f, 14f };
     private List<float> _zh = new () { -4f, 0f, 4f };
-    private List<float> _xv = new () { -7f, 0f, 7f };
-    private List<float> _zv = new () { 0f, 4f };
+    private List<float> _xvInner = new () { -7f, 0f, 7f };
+    private List<float> _xvOuther = new () { -7f, 7f };
+    private List<float> _zvInner = new () { 0f, 4f };
+    private List<float> _zvOuther = new () { -6f, 8f };
     private List<GameObject> _walls = new ();
 
     public void GenerateWall()
@@ -25,7 +27,8 @@ public class MapManager : MonoBehaviour
     {
         DestroyWalls();
         GenerateHorizontalWalls();
-        GenerateVerticalWalls();
+        GenerateVerticalWalls(_xvInner, _zvInner);
+        GenerateVerticalWalls(_xvOuther, _zvOuther);
     
         yield return new WaitForEndOfFrame();
     
@@ -44,21 +47,23 @@ public class MapManager : MonoBehaviour
         _walls.Clear();
     }
 
-    private void GenerateVerticalWalls()
+    private void GenerateVerticalWalls(List<float> xv, List<float> zv)
     {
-        for (int i = 0; i < _zv.Count; i++)
-        {
-            var x = _xv[Random.Range(0, _xv.Count)];
-            var wall = Instantiate(verticalWallPrefab, new Vector3(x, 0, _zv[i]), Quaternion.identity);
+            var x = xv[Random.Range(0, xv.Count)];
+            var z = zv[Random.Range(0, zv.Count)];
+            var wall = Instantiate(verticalWallPrefab, new Vector3(x, 0, z), Quaternion.identity);
             _walls.Add(wall);
-        }
     }
 
     private void GenerateHorizontalWalls()
     {
         for (int i = 0; i < _zh.Count; i++)
         {
-            var tempXh = new List<float>(_xh);
+            var tempXh = new List<float>();
+            if (i == 0) tempXh.AddRange(_xh.GetRange(0, 3));
+            else if (i == 1) tempXh.AddRange(_xh.GetRange(1, 2));
+            else tempXh.AddRange(_xh.GetRange(1, 3));
+            
             var count = Random.Range(1, 3);
             for (int j = 0; j < count; j++)
             {
